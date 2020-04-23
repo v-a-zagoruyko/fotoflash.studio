@@ -1,0 +1,30 @@
+$dark-font: #28313B;
+$primary-font: #6200EE;
+$secondary-font: #808080;
+$success-font: #4CAF50;
+$danger-font: #F24E4E;
+$white-font: #FFFFFF;
+
+$primary-element: #6200EE;
+$secondary-element: #BBC1C7;
+$success-element: #4CAF50;
+$danger-element: #F24E4E;
+$disabled-element: #E5E9F2;
+$light-element: #F7F8FA;
+$black-element: #28313B;
+$white-element: #FFFFFF;
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+}

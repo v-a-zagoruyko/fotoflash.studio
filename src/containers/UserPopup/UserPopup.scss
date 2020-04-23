@@ -1,0 +1,44 @@
+@import '../../styles/variables.scss';
+
+.userPopup {
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    z-index: 10;
+
+    padding: 15px 10px;
+    width: 300px;
+
+    border-radius: 4px;
+    box-shadow: 0 3px 5px 0 hsla(0, 0%, 0%, .2);
+    background-color: $white-element;
+
+    @media (max-width: 768px) {
+        right: 0;
+        bottom: 0;
+
+        width: 100%;
+
+        border-radius: 0;
+    }
+
+    &-title {
+        margin-bottom: 10px;
+
+        color: $dark-font;
+        font-size: 1.25rem;
+    }
+
+    &-description {
+        color: $dark-font;
+        font-size: .8rem;
+        font-weight: 300;
+        line-height: 16px;
+    }
+
+    &-link {
+        color: $dark-font;
+        font-size: .8rem;
+        font-weight: 300;
+    }
+}

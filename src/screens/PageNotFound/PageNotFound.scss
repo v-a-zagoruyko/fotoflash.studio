@@ -1,0 +1,46 @@
+@import '../../styles/variables.scss';
+
+.pageNotFound {
+    padding: 0 3%;
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    &-video {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+    &-title {
+        z-index: 1;
+
+        color: $white-font;
+        font-size: 2.8rem;
+        font-weight: 700;
+        line-height: 100%;
+        text-transform: uppercase;
+    }
+
+    &-error {
+        z-index: 1;
+
+        color: $white-font;
+        font-size: 6.5rem;
+        font-weight: 700;
+        line-height: 100%;
+    }
+}

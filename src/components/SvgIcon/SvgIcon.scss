@@ -1,0 +1,33 @@
+@import '../../styles/variables.scss';
+
+.icon {
+  &_primary {
+    fill: $primary-element;
+  }
+
+  &_secondary {
+    fill: $white-element;
+  }
+
+  &_success {
+    fill: $success-element;
+  }
+
+  &_danger {
+    fill: $danger-element;
+  }
+
+  &_dark {
+    fill: $black-element;
+  }
+
+  &_size_16 {
+    width: 16px;
+    height: 16px;
+  }
+
+  &_size_18 {
+    width: 18px;
+    height: 18px;
+  }
+}

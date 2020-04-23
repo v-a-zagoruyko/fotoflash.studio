@@ -1,0 +1,161 @@
+@import '../../../styles/variables.scss';
+
+.homeContainer {
+  &-link {
+    margin-top: 15px;
+    display: none;
+
+    @media (max-width: 992px) {
+      display: block;
+    }
+  }
+}
+
+.photographyContainer {
+  margin-top: 45px;
+}
+
+.photographyCard {
+  overflow: hidden;
+
+  margin-bottom: 45px;
+  min-height: 400px;
+
+  display: flex;
+
+  @media (max-width: 992px) {
+    height: auto;
+    flex-direction: column;
+  }
+
+  &-picture {
+    padding: 30px 3%;
+    width: 90vw;
+    height: auto;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    background-size: cover;
+    background-position: center center;
+
+    @media (max-width: 992px) {
+      margin-bottom: 15px;
+      width: 100%;
+      height: 300px;
+    }
+  }
+
+  &-title {
+    color: $white-font;
+    font-size: 5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    @media (max-width: 992px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  &-caption {
+    margin: 20px 0 10px 0;
+    color: $dark-font;
+    font-size: 1 !important;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    @media (max-width: 992px) {
+      font-size: 0.8rem !important;
+    }
+  }
+
+  &-body {
+    position: relative;
+    padding: 20px 3%;
+    width: 60vw;
+    flex-grow: 1;
+
+    @media (max-width: 992px) {
+      width: 100%;
+    }
+  }
+
+  &-stock {}
+
+  &-wysiwyg {
+    h3 {
+      margin-bottom: 15px;
+      color: $dark-font;
+      font-size: 1.25rem !important;
+
+      @media (max-width: 992px) {
+        font-size: 1rem !important;
+      }
+    }
+
+    p {
+      color: $dark-font;
+      font-size: 1 !important;
+      font-weight: 300;
+      line-height: 130%;
+
+      @media (max-width: 992px) {
+        font-size: 0.8rem !important;
+      }
+    }
+
+    li {
+      margin-top: 5px;
+      color: $dark-font;
+      font-size: 1 !important;
+      font-weight: 100;
+      line-height: 130%;
+
+      @media (max-width: 992px) {
+        font-size: 0.8rem !important;
+      }
+    }
+
+    img {
+      display: none;
+    }
+  }
+
+  &-link {
+    margin-top: 15px;
+    display: block;
+
+    @media (max-width: 992px) {
+      display: none;
+    }
+  }
+}
+
+.stockContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.stockCard {
+  overflow: hidden;
+
+  margin: 10px 10px 10px 0;
+  width: 70px;
+  height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-size: cover;
+  background-position: top center;
+
+  cursor: pointer;
+
+  &-picture {
+    width: auto;
+    height: 50px;
+  }
+}
