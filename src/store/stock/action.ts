@@ -15,21 +15,19 @@ import {
   IServicesListSuccessAction,
 } from './types';
 
-export const fetchStockList: ActionCreator<
-  ThunkAction<
-    Promise<IStockListSuccessAction | IStockListFailureAction>,
-    null,
-    null,
-    IStockListSuccessAction | IStockListFailureAction
-  >
-> = () => async (dispatch: Dispatch) => {
+export const fetchStockList: ActionCreator<ThunkAction<
+  Promise<IStockListSuccessAction | IStockListFailureAction>,
+  null,
+  null,
+  IStockListSuccessAction | IStockListFailureAction
+>> = () => async (dispatch: Dispatch) => {
   const stockRequest: IStockListRequestingAction = {
     type: 'STOCK_LIST_REQUESTING',
   };
   dispatch(stockRequest);
 
   try {
-    const { data }: { data: IStock[] } = await axios.get('http://68.183.201.128:8080/api/stock/');
+    const { data }: { data: IStock[] } = await axios.get('http://admin.fotoflash.studio/api/stock/');
 
     const stockSuccess: IStockListSuccessAction = {
       list: data,
@@ -47,21 +45,19 @@ export const fetchStockList: ActionCreator<
   }
 };
 
-export const fetchRentList: ActionCreator<
-  ThunkAction<
-    Promise<IRentListSuccessAction | IRentListFailureAction>,
-    null,
-    null,
-    IRentListSuccessAction | IRentListFailureAction
-  >
-> = () => async (dispatch: Dispatch) => {
+export const fetchRentList: ActionCreator<ThunkAction<
+  Promise<IRentListSuccessAction | IRentListFailureAction>,
+  null,
+  null,
+  IRentListSuccessAction | IRentListFailureAction
+>> = () => async (dispatch: Dispatch) => {
   const rentRequest: IRentListRequestingAction = {
     type: 'RENT_LIST_REQUESTING',
   };
   dispatch(rentRequest);
 
   try {
-    const { data }: { data: IStock[] } = await axios.get('http://68.183.201.128:8080/api/rent/');
+    const { data }: { data: IStock[] } = await axios.get('http://admin.fotoflash.studio/api/rent/');
 
     const rentSuccess: IRentListSuccessAction = {
       list: data,
@@ -79,21 +75,19 @@ export const fetchRentList: ActionCreator<
   }
 };
 
-export const fetchServicesList: ActionCreator<
-  ThunkAction<
-    Promise<IServicesListSuccessAction | IServicesListFailureAction>,
-    null,
-    null,
-    IServicesListSuccessAction | IServicesListFailureAction
-  >
-> = () => async (dispatch: Dispatch) => {
+export const fetchServicesList: ActionCreator<ThunkAction<
+  Promise<IServicesListSuccessAction | IServicesListFailureAction>,
+  null,
+  null,
+  IServicesListSuccessAction | IServicesListFailureAction
+>> = () => async (dispatch: Dispatch) => {
   const servicesRequest: IServicesListRequestingAction = {
     type: 'SERVICES_LIST_REQUESTING',
   };
   dispatch(servicesRequest);
 
   try {
-    const { data }: { data: IStock[] } = await axios.get('http://68.183.201.128:8080/api/services/');
+    const { data }: { data: IStock[] } = await axios.get('http://admin.fotoflash.studio/api/services/');
 
     const servicesSuccess: IServicesListSuccessAction = {
       list: data,

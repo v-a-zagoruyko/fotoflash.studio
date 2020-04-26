@@ -145,7 +145,7 @@ class BookingPage extends React.Component<TBookingPage> {
   public setSelectedPhotograph = (id: number | null) => {
     this.setState({ photograph: id });
   };
-  
+
   public setBonus = (e: any) => {
     this.setState({ bonus: e.target.value });
   };
@@ -173,7 +173,7 @@ class BookingPage extends React.Component<TBookingPage> {
     const { area: area_, bonus, date, start, end, photograph, stockCart, servicesCart } = this.state;
 
     const areaTitle = area?.find(x => x.id === area_);
-    const bonus_ = profile?.profile?.card && (bonus <= (price - 1)) && bonus <= profile.profile!.card!.balance ? bonus : 0;
+    const bonus_ = profile?.profile?.card && bonus <= price - 1 && bonus <= profile.profile!.card!.balance ? bonus : 0;
     let orderId = -1;
 
     const bookingData = {
@@ -190,7 +190,7 @@ class BookingPage extends React.Component<TBookingPage> {
 
     if (localStorage.getItem('token') && profile) {
       try {
-        const { data } = await axios.post('http://68.183.201.128:8080/api/booking/', bookingData, {
+        const { data } = await axios.post('http://admin.fotoflash.studio/api/booking/', bookingData, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: localStorage.getItem('token'),
@@ -199,13 +199,12 @@ class BookingPage extends React.Component<TBookingPage> {
 
         orderId = data[0];
       } catch (error) {
-        toast.error(error.response.data[Object.keys(error.response.data)[0]][0]);
+        toast.error(error.response.data.detail);
       }
     } else {
       toast.error('Для того чтобы совершить бронирование необходимо авторизоваться в личном кабинете');
       history.push('/user');
     }
-
 
     /*
       @ Tinkoff
@@ -214,30 +213,38 @@ class BookingPage extends React.Component<TBookingPage> {
     //  const term = '1577093382823';
     const pass = '1fd2w4t3tjkum7bi';
     //  const pass = 'b8guw9it0gacdjn4';
-    const token = sha256(`${String(price * 100)}Аренда фотостудии${String(1000)}${pass}${term}`)
+    const token = sha256(`${String(price * 100)}Аренда фотостудии${String(1000)}${pass}${term}`);
 
     try {
-    const { data } = await axios({
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      data: {
-        Token: token,
-        TerminalKey: term,
-        NotificationURL: 'http://68.183.201.128:8080/api/locationrentstatus/',
-        OrderId: String(orderId),
-        Description: `Аренда фотостудии - ${areaTitle?.title} на ${date.format('DD-MMMM-YYYY')}`,
-        Amount: (price - bonus_) * 100,
-        Receipt: {
-          Email: profile?.email,
-          Phone: profile?.profile?.phone,
-          EmailCompany: 'info@fotoflash.studio',
-          Taxation: 'osn',
-          Items: [{ Name: 'Аренда фотостудии и оборудования', Quantity: 1, Amount: (price - bonus_) * 100, Price: (price - bonus_) * 100, Tax: 'none' }]
-        }
-    },
-      url: `https://securepay.tinkoff.ru/v2/Init`,
-    });
-      window.open(data.PaymentURL,"_self");
+      const { data } = await axios({
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        data: {
+          Token: token,
+          TerminalKey: term,
+          NotificationURL: 'http://admin.fotoflash.studio/api/locationrentstatus/',
+          OrderId: String(orderId),
+          Description: `Аренда фотостудии - ${areaTitle?.title} на ${date.format('DD-MMMM-YYYY')}`,
+          Amount: (price - bonus_) * 100,
+          Receipt: {
+            Email: profile?.email,
+            Phone: profile?.profile?.phone,
+            EmailCompany: 'info@fotoflash.studio',
+            Taxation: 'osn',
+            Items: [
+              {
+                Name: 'Аренда фотостудии и оборудования',
+                Quantity: 1,
+                Amount: (price - bonus_) * 100,
+                Price: (price - bonus_) * 100,
+                Tax: 'none',
+              },
+            ],
+          },
+        },
+        url: `https://securepay.tinkoff.ru/v2/Init`,
+      });
+      window.open(data.PaymentURL, '_self');
       // history.push('/profile/booking')
     } catch (error) {
       this.setState({ running: false });
@@ -248,7 +255,7 @@ class BookingPage extends React.Component<TBookingPage> {
       @ Tinkoff
     */
 
-   this.setState({ running: false });
+    this.setState({ running: false });
   };
 
   get Area() {
@@ -273,25 +280,29 @@ class BookingPage extends React.Component<TBookingPage> {
             return (
               <div
                 key={`area${id}`}
-                className={`${styles['area-card']} ${this.state.area === id && styles['area-card--active']} ${gallery.length <= 1 && styles['area-card--disabled']}`}
+                className={`${styles['area-card']} ${this.state.area === id &&
+                  styles['area-card--active']} ${gallery.length <= 1 && styles['area-card--disabled']}`}
                 onClick={gallery.length > 1 ? () => this.setSelectedArea(id) : undefined}
               >
                 <div className={styles['area-card__gallery']}>
                   <Slider {...settings}>
-                    {this.state.area === id && gallery.map((x, idx) => (
-                      <div key={idx} className={styles['area-card__slide']}>
-                        <img className={styles['area-card__img']} src={x} alt="" />
+                    {this.state.area === id &&
+                      gallery.map((x, idx) => (
+                        <div key={idx} className={styles['area-card__slide']}>
+                          <img className={styles['area-card__img']} src={x} alt="" />
+                        </div>
+                      ))}
+                    {this.state.area !== id && (
+                      <div className={styles['area-card__slide']}>
+                        <img className={styles['area-card__img']} src={cover} alt="" />
                       </div>
-                    ))}
-                    {this.state.area !== id && <div className={styles['area-card__slide']}>
-                      <img className={styles['area-card__img']} src={cover} alt="" />
-                    </div>}
+                    )}
                   </Slider>
                 </div>
                 <div className={styles['area-card__info']} dangerouslySetInnerHTML={{ __html: text }} />
                 <div className={styles['area-card__title']}>{title}</div>
               </div>
-            )
+            );
           })}
         </div>
       );
@@ -684,13 +695,15 @@ class BookingPage extends React.Component<TBookingPage> {
               </p>
             ))}
           <h3 className={styles['checkoutContainer-subtitle']}>Итого: {price} ˙₽</h3>
-          {profile.profile?.card && profile.profile?.card?.balance > 10 && (<div className={styles['bonus']}>
-            <span className={styles['bonus-title']}>Оплатить бонусами</span>
-            <div className={styles['bonus-inputs']}>
-              <input onChange={this.setBonus} type="range" min="0" max={max} value={this.state.bonus}></input>
-              <input onChange={this.setBonus} type="number" min="0" max={max} value={this.state.bonus}></input>
+          {profile.profile?.card && profile.profile?.card?.balance > 10 && (
+            <div className={styles['bonus']}>
+              <span className={styles['bonus-title']}>Оплатить бонусами</span>
+              <div className={styles['bonus-inputs']}>
+                <input onChange={this.setBonus} type="range" min="0" max={max} value={this.state.bonus}></input>
+                <input onChange={this.setBonus} type="number" min="0" max={max} value={this.state.bonus}></input>
+              </div>
             </div>
-          </div>)}
+          )}
           <Button
             style={{ marginTop: 10 }}
             type="primary"

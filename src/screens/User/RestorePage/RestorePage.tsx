@@ -41,31 +41,31 @@ class RestorePage extends React.Component<IUserPageProps, IUserPageState> {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         data: { email },
-        url: `http://68.183.201.128:8080/user/password/reset/`,
+        url: `http://admin.fotoflash.studio/user/password/reset/`,
       });
 
       toast.success(`Письмо с инструкцией отправлено на ${email}`);
     } catch (error) {
-      toast.error(error.response.data[Object.keys(error.response.data)[0]][0]);
-      console.error(error.response.data[Object.keys(error.response.data)[0]][0]);
+      toast.error(error.response.data.detail);
+      console.error(error.response.data.detail);
     }
   };
 
   handleChangePassword = async () => {
-      const { uid, token, new_password1, new_password2 } = this.state;
+    const { uid, token, new_password1, new_password2 } = this.state;
     try {
       await axios({
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         data: { uid, token, new_password1, new_password2 },
-        url: `http://68.183.201.128:8080/user/password/reset/confirm/`,
+        url: `http://admin.fotoflash.studio/user/password/reset/confirm/`,
       });
 
-        history.push('/user');
+      history.push('/user');
       toast.success('Пароль успешно изменен!');
     } catch (error) {
-      toast.error(error.response.data[Object.keys(error.response.data)[0]][0]);
-      console.error(error.response.data[Object.keys(error.response.data)[0]][0]);
+      toast.error(error.response.data.detail);
+      console.error(error.response.data.detail);
     }
   };
 

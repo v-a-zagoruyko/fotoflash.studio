@@ -30,21 +30,19 @@ import {
   IUserBookingTimeSuccessAction,
 } from './types';
 
-export const loginUser: ActionCreator<
-  ThunkAction<
-    Promise<IUserLoginSuccessAction | IUserLoginFailureAction>,
-    null,
-    null,
-    IUserLoginSuccessAction | IUserLoginFailureAction
-  >
-> = (credentials: { email: string; password: string }) => async (dispatch: Dispatch) => {
+export const loginUser: ActionCreator<ThunkAction<
+  Promise<IUserLoginSuccessAction | IUserLoginFailureAction>,
+  null,
+  null,
+  IUserLoginSuccessAction | IUserLoginFailureAction
+>> = (credentials: { email: string; password: string }) => async (dispatch: Dispatch) => {
   const userRequest: IUserLoginRequestingAction = {
     type: 'USER_LOGIN_REQUESTING',
   };
   dispatch(userRequest);
 
   try {
-    const { data }: { data: ILogin } = await axios.post('http://68.183.201.128:8080/api/auth/login/', credentials, {
+    const { data }: { data: ILogin } = await axios.post('http://admin.fotoflash.studio/api/auth/login/', credentials, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -56,7 +54,7 @@ export const loginUser: ActionCreator<
     };
 
     localStorage.setItem('token', `Bearer ${data.token}`);
-    history.push('/profile/personal')
+    history.push('/profile/personal');
 
     return dispatch(userSuccess);
   } catch (error) {
@@ -65,27 +63,25 @@ export const loginUser: ActionCreator<
       type: 'USER_LOGIN_FAILURE',
     };
 
-    toast.error(error.response.data[Object.keys(error.response.data)[0]][0]);
+    toast.error(error.response.data.detail);
 
     return dispatch(userFailure);
   }
 };
 
-export const createUser: ActionCreator<
-  ThunkAction<
-    Promise<IUserCreateSuccessAction | IUserCreateFailureAction>,
-    null,
-    null,
-    IUserCreateSuccessAction | IUserCreateFailureAction
-  >
-> = (info: IUser) => async (dispatch: Dispatch) => {
+export const createUser: ActionCreator<ThunkAction<
+  Promise<IUserCreateSuccessAction | IUserCreateFailureAction>,
+  null,
+  null,
+  IUserCreateSuccessAction | IUserCreateFailureAction
+>> = (info: IUser) => async (dispatch: Dispatch) => {
   const userRequest: IUserCreateRequestingAction = {
     type: 'USER_CREATE_REQUESTING',
   };
   dispatch(userRequest);
 
   try {
-    await axios.post('http://68.183.201.128:8080/api/users/', info, {
+    await axios.post('http://admin.fotoflash.studio/api/users/', info, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -105,34 +101,32 @@ export const createUser: ActionCreator<
       type: 'USER_CREATE_FAILURE',
     };
 
-    toast.error(error.response.data[Object.keys(error.response.data)[0]][0]);
+    toast.error(error.response.data.detail);
 
     return dispatch(userFailure);
   }
 };
 
-export const fetchUser: ActionCreator<
-  ThunkAction<
-    Promise<IUserFetchSuccessAction | IUserFetchFailureAction>,
-    null,
-    null,
-    IUserFetchSuccessAction | IUserFetchFailureAction
-  >
-> = () => async (dispatch: Dispatch) => {
+export const fetchUser: ActionCreator<ThunkAction<
+  Promise<IUserFetchSuccessAction | IUserFetchFailureAction>,
+  null,
+  null,
+  IUserFetchSuccessAction | IUserFetchFailureAction
+>> = () => async (dispatch: Dispatch) => {
   const userRequest: IUserFetchRequestingAction = {
     type: 'USER_FETCH_REQUESTING',
   };
   dispatch(userRequest);
 
   try {
-    const { data }: { data: any } = await axios.get('http://68.183.201.128:8080/api/auth/user/', {
+    const { data }: { data: any } = await axios.get('http://admin.fotoflash.studio/api/auth/user/', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('token'),
       },
     });
 
-    const user = await axios.get(`http://68.183.201.128:8080/api/users/${data.pk}/`, {
+    const user = await axios.get(`http://admin.fotoflash.studio/api/users/${data.pk}/`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('token'),
@@ -151,36 +145,34 @@ export const fetchUser: ActionCreator<
       type: 'USER_FETCH_FAILURE',
     };
 
-    toast.error(error.response.data[Object.keys(error.response.data)[0]][0]);
+    toast.error(error.response.data.detail);
     localStorage.clear();
-    history.push('/')
+    history.push('/');
 
     return dispatch(userFailure);
   }
 };
 
-export const patchUser: ActionCreator<
-  ThunkAction<
-    Promise<IUserPatchSuccessAction | IUserPatchFailureAction>,
-    null,
-    null,
-    IUserPatchSuccessAction | IUserPatchFailureAction
-  >
-> = (user: IUser) => async (dispatch: Dispatch) => {
+export const patchUser: ActionCreator<ThunkAction<
+  Promise<IUserPatchSuccessAction | IUserPatchFailureAction>,
+  null,
+  null,
+  IUserPatchSuccessAction | IUserPatchFailureAction
+>> = (user: IUser) => async (dispatch: Dispatch) => {
   const userRequest: IUserPatchRequestingAction = {
     type: 'USER_PATCH_REQUESTING',
   };
   dispatch(userRequest);
 
   try {
-    const { data }: { data: any } = await axios.get('http://68.183.201.128:8080/api/auth/user/', {
+    const { data }: { data: any } = await axios.get('http://admin.fotoflash.studio/api/auth/user/', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('token'),
       },
     });
 
-    const newUser = await axios.patch(`http://68.183.201.128:8080/api/users/${data.pk}/`, user, {
+    const newUser = await axios.patch(`http://admin.fotoflash.studio/api/users/${data.pk}/`, user, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('token'),
@@ -199,27 +191,25 @@ export const patchUser: ActionCreator<
       type: 'USER_PATCH_FAILURE',
     };
 
-    toast.error(error.response.data[Object.keys(error.response.data)[0]][0]);
+    toast.error(error.response.data.detail);
 
     return dispatch(userFailure);
   }
 };
 
-export const fetchUserBookingList: ActionCreator<
-  ThunkAction<
-    Promise<IUserBookingListSuccessAction | IUserBookingListFailureAction>,
-    null,
-    null,
-    IUserBookingListSuccessAction | IUserBookingListFailureAction
-  >
-> = () => async (dispatch: Dispatch) => {
+export const fetchUserBookingList: ActionCreator<ThunkAction<
+  Promise<IUserBookingListSuccessAction | IUserBookingListFailureAction>,
+  null,
+  null,
+  IUserBookingListSuccessAction | IUserBookingListFailureAction
+>> = () => async (dispatch: Dispatch) => {
   const userRequest: IUserBookingListRequestingAction = {
     type: 'USER_BOOKING_LIST_REQUESTING',
   };
   dispatch(userRequest);
 
   try {
-    const { data }: { data: IBooking[] } = await axios.get('http://68.183.201.128:8080/api/booking/', {
+    const { data }: { data: IBooking[] } = await axios.get('http://admin.fotoflash.studio/api/booking/', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('token'),
@@ -238,27 +228,25 @@ export const fetchUserBookingList: ActionCreator<
       type: 'USER_BOOKING_LIST_FAILURE',
     };
 
-    toast.error(error.response.data[Object.keys(error.response.data)[0]][0]);
+    toast.error(error.response.data.detail);
 
     return dispatch(userFailure);
   }
 };
 
-export const createUserBooking: ActionCreator<
-  ThunkAction<
-    Promise<IUserBookingCreateSuccessAction | IUserBookingCreateFailureAction>,
-    null,
-    null,
-    IUserBookingCreateSuccessAction | IUserBookingCreateFailureAction
-  >
-> = (booking: IBooking) => async (dispatch: Dispatch) => {
+export const createUserBooking: ActionCreator<ThunkAction<
+  Promise<IUserBookingCreateSuccessAction | IUserBookingCreateFailureAction>,
+  null,
+  null,
+  IUserBookingCreateSuccessAction | IUserBookingCreateFailureAction
+>> = (booking: IBooking) => async (dispatch: Dispatch) => {
   const userRequest: IUserBookingCreateRequestingAction = {
     type: 'USER_BOOKING_CREATE_REQUESTING',
   };
   dispatch(userRequest);
 
   try {
-    await axios.post('http://68.183.201.128:8080/api/booking/', booking, {
+    await axios.post('http://admin.fotoflash.studio/api/booking/', booking, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('token'),
@@ -278,20 +266,18 @@ export const createUserBooking: ActionCreator<
       type: 'USER_BOOKING_CREATE_FAILURE',
     };
 
-    toast.error(error.response.data[Object.keys(error.response.data)[0]][0]);
+    toast.error(error.response.data.detail);
 
     return dispatch(userFailure);
   }
 };
 
-export const fetchUserBookingTime: ActionCreator<
-  ThunkAction<
-    Promise<IUserBookingTimeSuccessAction | IUserBookingTimeFailureAction>,
-    null,
-    null,
-    IUserBookingTimeSuccessAction | IUserBookingTimeFailureAction
-  >
-> = (date: string, area: number) => async (dispatch: Dispatch) => {
+export const fetchUserBookingTime: ActionCreator<ThunkAction<
+  Promise<IUserBookingTimeSuccessAction | IUserBookingTimeFailureAction>,
+  null,
+  null,
+  IUserBookingTimeSuccessAction | IUserBookingTimeFailureAction
+>> = (date: string, area: number) => async (dispatch: Dispatch) => {
   const userRequest: IUserBookingTimeRequestingAction = {
     type: 'USER_BOOKING_TIME_REQUESTING',
   };
@@ -299,7 +285,7 @@ export const fetchUserBookingTime: ActionCreator<
 
   try {
     const { data }: { data: IBooking[] } = await axios.get(
-      `http://68.183.201.128:8080/api/locationrent/?id=${area}&date=${date}`,
+      `http://admin.fotoflash.studio/api/locationrent/?id=${area}&date=${date}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -318,7 +304,7 @@ export const fetchUserBookingTime: ActionCreator<
       error,
       type: 'USER_BOOKING_TIME_FAILURE',
     };
-    toast.error(error.response.data[Object.keys(error.response.data)[0]][0]);
+    toast.error(error.response.data.detail);
 
     return dispatch(userFailure);
   }

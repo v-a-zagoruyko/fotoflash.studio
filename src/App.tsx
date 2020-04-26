@@ -22,8 +22,8 @@ import {
 
 import '../src/styles/global.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const PrivateRoute = ({ component: Component, ...rest }: any) => (
   <Route
