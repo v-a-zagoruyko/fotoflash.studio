@@ -145,9 +145,9 @@ export const fetchUser: ActionCreator<ThunkAction<
       type: 'USER_FETCH_FAILURE',
     };
 
-    toast.error(error.response.data.detail);
+    toast.error('Войдите в личный кабинет или зарегистрируйтесь чтобы совершить бронирование');
     localStorage.clear();
-    history.push('/');
+    // history.push('/');
 
     return dispatch(userFailure);
   }
