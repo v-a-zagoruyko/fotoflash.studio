@@ -209,10 +209,10 @@ class BookingPage extends React.Component<TBookingPage> {
     /*
       @ Tinkoff
     */
-    const term = '1577093382823DEMO';
-    //  const term = '1577093382823';
-    const pass = '1fd2w4t3tjkum7bi';
-    //  const pass = 'b8guw9it0gacdjn4';
+    // const term = '1577093382823DEMO';
+    const term = '1577093382823';
+    // const pass = '1fd2w4t3tjkum7bi';
+    const pass = 'b8guw9it0gacdjn4';
     const token = sha256(`${String(price * 100)}Аренда фотостудии${String(1000)}${pass}${term}`);
 
     try {
