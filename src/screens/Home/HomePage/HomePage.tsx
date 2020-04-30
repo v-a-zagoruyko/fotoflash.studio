@@ -185,13 +185,40 @@ class HomePage extends React.Component<THomePage> {
       <MainContainer isLoading={isLoading}>
         {this.PreviewContent}
         <Nav routes={routes} />
-        <h1 className="mainContainer-title">АРТ ПРОСТРАНСТВО FOTOFLASH</h1>
+        {/* <h1 className="mainContainer-title">АРТ ПРОСТРАНСТВО FOTOFLASH</h1>
         <p className="mainContainer-text">
           Рады сообщить вам, что мы открыли свои двери!
           <br />
           Бронируйте фотосессии онлайн, регистрируйтесь, следите за новостями студии и получайте бонусы и подарки
           эксклюзивно на сайте.
+        </p> */}
+        {/* <br /> */}
+        <h1 className="mainContainer-title">СИСТЕМА ЛОЯЛЬНОСТИ FOTOFLASH</h1>
+        <p className="mainContainer-text" style={{ lineHeight: '1.5rem' }}>
+          Уважаемые фотографы! Мы ценим своих клиентов и нацелены на длительное сотрудничество. Арт пространство
+          "FOTOFLASH" подготовила программу лояльности для постоянных клиентов.
+          <br />
+          Карты бывают четырех видов:
+          <br />
         </p>
+        <ul style={{ marginTop: '10px' }}>
+          <li style={{ marginLeft: '16px', marginBottom: '8px' }} className="mainContainer-text">
+            <b>Классическая</b> - привязывается автоматически при регистрации аккаунта и накапливает 3% бонусов от общей
+            суммы заказа.
+          </li>
+          <li style={{ marginLeft: '16px', marginBottom: '8px' }} className="mainContainer-text">
+            <b>Серебряная</b> - привязывается автоматически при общем времени бронирования не менее 20 часов и
+            накапливает 7% бонусов от общей суммы заказа.
+          </li>
+          <li style={{ marginLeft: '16px', marginBottom: '8px' }} className="mainContainer-text">
+            <b>Золотая</b> - привязывается автоматически при общем времени бронирования не менее 70 часов и накапливает
+            15% бонусов от общей суммы заказа.
+          </li>
+          <li style={{ marginLeft: '16px', marginBottom: '8px' }} className="mainContainer-text">
+            <b>Платиновая</b> - привязывается автоматически при общем времени бронирования не менее 150 часов и
+            накапливает 20% бонусов от общей суммы заказа.
+          </li>
+        </ul>
         <section className={styles['homeContainer']}>
           <Link to="/booking" className={styles['homeContainer-link']}>
             <Button text="Перейти к бронированию" title="Перейти к бронированию" type="primary" />
@@ -221,7 +248,4 @@ const mapDispatchToProps = (dispatch: any) => ({
   fetchAreaList: () => dispatch(fetchAreaList()),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
