@@ -244,6 +244,25 @@ class BookingPage extends React.Component<TBookingPage> {
         },
         url: `https://securepay.tinkoff.ru/v2/Init`,
       });
+
+      try {
+        await axios.post(
+          'http://admin.fotoflash.studio/api/paymenturl/',
+          {
+            OrderId: orderId,
+            PaymentUrl: data.PaymentURL,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: localStorage.getItem('token'),
+            },
+          }
+        );
+      } catch (error) {
+        toast.error(error.response.data.detail);
+      }
+
       window.open(data.PaymentURL, '_self');
       // history.push('/profile/booking')
     } catch (error) {

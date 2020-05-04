@@ -14,6 +14,7 @@ export interface IBooking {
   photograph: ITeam | null;
   price: number;
   isPayed: boolean;
+  paymentUrl?: string;
 }
 
 export interface IUser {

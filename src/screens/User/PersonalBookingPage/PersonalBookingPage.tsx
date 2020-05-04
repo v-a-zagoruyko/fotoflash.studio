@@ -42,7 +42,7 @@ class PersonalBookingPage extends React.Component<TPersonalBookingPage> {
       return (
         <div className={styles['bookingContainer']}>
           {bookingList.map(x => {
-            const { id, area, date, timeStart, timeEnd, photograph, price, isPayed } = x;
+            const { id, area, date, timeStart, timeEnd, photograph, price, isPayed, paymentUrl } = x;
 
             return (
               <div key={`bookingCard${id}`} className={styles['bookingCard']}>
@@ -74,19 +74,25 @@ class PersonalBookingPage extends React.Component<TPersonalBookingPage> {
                       <span>{photograph.user}</span>
                     </h3>
                   )}
-                  <h3 className={styles['bookingCard-caption']}>{price} ₽</h3>
-                  <Button
+                  {/* <h3 className={styles['bookingCard-caption']}>{price} ₽</h3> */}
+                  {/* <Button
                     style={{ marginTop: 10 }}
                     type="primary"
                     size="md"
                     text="Посмотреть фото"
                     title="Фотографии будут доступны после фотосессии"
                     isDisabled={true}
-                  />
-                  {!isPayed && (
-                    <span className={styles['bookingCard-payment']}>
-                      * Заказ не оплачен, мы оставляем за собой право удалить любой неоплаченный заказ в течение 30 минут после бронирования. По вопросам оплаты свяжитесь с нами по телефону указанному на сайте.
-                    </span>
+                  /> */}
+                  {!isPayed && paymentUrl && (
+                    <>
+                      <span className={styles['bookingCard-payment']}>
+                        * Заказ не оплачен, мы оставляем за собой право удалить любой неоплаченный заказ в течение 30
+                        минут после бронирования. По вопросам оплаты свяжитесь с нами по телефону указанному на сайте.
+                      </span>
+                      <a href={paymentUrl}>
+                        <Button style={{ marginTop: 10 }} type="primary" size="md" text="Оплатить" />
+                      </a>
+                    </>
                   )}
                 </div>
               </div>
@@ -134,7 +140,4 @@ const mapDispatchToProps = (dispatch: any) => ({
   fetchUserBookingList: () => dispatch(fetchUserBookingList()),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PersonalBookingPage);
+export default connect(mapStateToProps, mapDispatchToProps)(PersonalBookingPage);
