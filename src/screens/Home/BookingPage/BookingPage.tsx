@@ -41,6 +41,8 @@ interface IBookingPageProps {
 
 interface IBookingPageState {
   running: boolean;
+  halfNight: boolean;
+  fullNight: boolean;
   bonus: number;
   stockCategory?: string;
   stockCart: number[];
@@ -69,6 +71,8 @@ dayjs.locale('ru');
 registerLocale('ru', ru);
 class BookingPage extends React.Component<TBookingPage> {
   public state: IBookingPageState = {
+    halfNight: false,
+    fullNight: false,
     running: false,
     bonus: 0,
     area: 0,
@@ -88,6 +92,14 @@ class BookingPage extends React.Component<TBookingPage> {
     await fetchTeamList();
   }
 
+  public setHalfNight = (e: any) => {
+    this.setState({ start: this.state.date.hour(22), end: this.state.date.hour(2), halfNight: true, fullNight: false });
+  };
+
+  public setFullNight = (e: any) => {
+    this.setState({ start: this.state.date.hour(22), end: this.state.date.hour(8), fullNight: true, halfNight: false });
+  };
+
   public setSelectedArea = async (id: number) => {
     const { fetchUserBookingTime } = this.props;
     if (this.state.area !== id) {
@@ -105,6 +117,11 @@ class BookingPage extends React.Component<TBookingPage> {
   };
 
   public setSelectedTime = (time: Dayjs) => {
+    if (this.state.halfNight || this.state.fullNight) {
+      this.setState({ start: this.state.date.hour(time.hour()), end: null, halfNight: false, fullNight: false });
+      return;
+    }
+
     if (this.state.end) {
       this.setState({ start: this.state.date.hour(time.hour()), end: null });
     } else if (this.state.start) {
@@ -426,6 +443,7 @@ class BookingPage extends React.Component<TBookingPage> {
                   className={`${styles['timeCard']}
                   ${isActive && styles['timeCard_active']}
                   ${isBetween && styles['timeCard_between']}
+                  ${(this.state.halfNight || this.state.fullNight) && styles['timeCard_between']}
                   ${!isAvailable && styles['timeCard_between']}`}
                   onClick={isAvailable ? () => this.setSelectedTime(x) : undefined}
                 >
@@ -435,6 +453,14 @@ class BookingPage extends React.Component<TBookingPage> {
                 </div>
               );
             })}
+          </div>
+          <div style={{ marginTop: '10px'}}>
+            <input onChange={this.setHalfNight} checked={this.state.halfNight} type="checkbox" id="halfnight" name="halfnight" />
+            <label style={{fontSize: '16px;', fontWeight: 'bold', marginLeft: '10px'}} htmlFor="halfnight">Половина ночи (22:00 - 03:00)</label>
+          </div>
+          <div style={{ marginBottom: '8px'}}>
+            <input onChange={this.setFullNight} checked={this.state.fullNight} type="checkbox" id="fullnight" name="fullnight" />
+            <label style={{fontSize: '16px;', fontWeight: 'bold', marginLeft: '10px'}} htmlFor="fullnight">Вся ночь (22:00 - 09:00)</label>
           </div>
         </>
       );
@@ -668,6 +694,14 @@ class BookingPage extends React.Component<TBookingPage> {
       });
 
       let max = 0;
+
+      if (this.state.halfNight) {
+        price = area.rentCostHalfNight;
+      }
+
+      if (this.state.fullNight) {
+        price = area.rentCostFullNight;
+      }
 
       if (profile.profile?.card) {
         max = price > profile.profile!.card!.balance ? profile.profile!.card!.balance : price - 1;
