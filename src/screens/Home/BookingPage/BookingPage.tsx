@@ -93,11 +93,19 @@ class BookingPage extends React.Component<TBookingPage> {
   }
 
   public setHalfNight = (e: any) => {
-    this.setState({ start: this.state.date.hour(22), end: this.state.date.hour(2), halfNight: true, fullNight: false });
+    if (e.target.checked) {
+      this.setState({ start: this.state.date.hour(22), end: this.state.date.hour(2), halfNight: true, fullNight: false });
+    } else {
+      this.setState({ start: null, end: null, halfNight: false, fullNight: false });
+    }
   };
 
   public setFullNight = (e: any) => {
-    this.setState({ start: this.state.date.hour(22), end: this.state.date.hour(8), fullNight: true, halfNight: false });
+    if (e.target.checked) {
+      this.setState({ start: this.state.date.hour(22), end: this.state.date.hour(8), fullNight: true, halfNight: false });
+    } else {
+      this.setState({ start: null, end: null, halfNight: false, fullNight: false });
+    }
   };
 
   public setSelectedArea = async (id: number) => {
