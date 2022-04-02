@@ -47,7 +47,7 @@ class UserPage extends React.Component<TLoginPage> {
   public handleUserLogin = () => {
     const { loginUser } = this.props;
 
-    loginUser({ email: this.state.email!, password: this.state.password! });
+    loginUser({ email: this.state.email!.toLowerCase(), password: this.state.password! });
   };
 
   public handleUserRegister = () => {
@@ -55,7 +55,7 @@ class UserPage extends React.Component<TLoginPage> {
     const signUpData = {
       first_name: this.state.firstName!,
       last_name: this.state.lastName!,
-      email: this.state.email!,
+      email: this.state.email!.toLowerCase(),
       password: this.state.password!,
       profile: { phone: Number('7' + this.state.phone!.replace(/[^0-9]/g, '').substr(1)) },
     };

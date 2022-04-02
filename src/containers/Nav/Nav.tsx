@@ -40,8 +40,8 @@ export default (props: INav) => {
           <Link to="/profile/personal" className="navList-link navList-link_active">
             ЛИЧНЫЙ КАБИНЕТ
           </Link>
-          <a className="navList-link" href="tel:+79222670055">
-            +7-922-267-00-55
+          <a className="navList-link" href="tel:89222670055">
+            89222670055
           </a>
         </div>
       </div>

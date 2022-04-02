@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import Slider from 'react-slick';
 import dayjs, { Dayjs } from 'dayjs';
@@ -45,6 +46,7 @@ interface IBookingPageState {
   fullNight: boolean;
   bonus: number;
   stockCategory?: string;
+  agreement: boolean;
   stockCart: number[];
   servicesCategory?: string;
   servicesCart: number[];
@@ -74,6 +76,7 @@ class BookingPage extends React.Component<TBookingPage> {
     halfNight: false,
     fullNight: false,
     running: false,
+    agreement: false,
     bonus: 0,
     area: 0,
     photograph: null,
@@ -90,6 +93,10 @@ class BookingPage extends React.Component<TBookingPage> {
     await fetchStockList();
     await fetchServicesList();
     await fetchTeamList();
+  }
+
+  public setAgreement = (e: any) => {
+    this.setState({ agreement: e.target.checked });
   }
 
   public setHalfNight = (e: any) => {
@@ -233,11 +240,9 @@ class BookingPage extends React.Component<TBookingPage> {
 
     /*
       @ Tinkoff
-    */
-    // const term = '1577093382823DEMO';
-    const term = '1577093382823';
-    // const pass = '1fd2w4t3tjkum7bi';
-    const pass = 'b8guw9it0gacdjn4';
+    */    
+    const term = '1618835878257';
+    const pass = 's0dgulu4hbeq6h88';
     const token = sha256(`${String(price * 100)}Аренда фотостудии${String(1000)}${pass}${term}`);
 
     try {
@@ -300,6 +305,7 @@ class BookingPage extends React.Component<TBookingPage> {
     */
 
     this.setState({ running: false });
+    // history.push('/profile/booking')
   };
 
   get Area() {
@@ -380,6 +386,8 @@ class BookingPage extends React.Component<TBookingPage> {
   get Time() {
     const { date, start, end } = this.state;
     const area = this.props.area && this.props.area.filter(x => x.id === this.state.area)[0];
+    const today = dayjs(new Date());
+    const isSameDay = date.date() === today.date() && date.month() === today.month() && date.year() === today.year();
     const isWeekend = date.day() % 6 === 0 || date.day() % 5 === 0;
     const time = Array.apply(null, Array(15)).map((x, idx) => dayjs().hour(idx + 9));
 
@@ -404,7 +412,7 @@ class BookingPage extends React.Component<TBookingPage> {
         <>
           <div className={styles['timeGrid']}>
             {time.map((x, idx) => {
-              let isAvailable = true;
+              let isAvailable = isSameDay ? today.hour() <= x.hour() : true;
               const isActive = (start && start.hour() === x.hour()) || (end && end.hour() === x.hour());
               const isBetween =
                 start && end && x.hour() > start.hour() && x.hour() < (end.hour() === 0 ? 24 : end.hour());
@@ -719,6 +727,9 @@ class BookingPage extends React.Component<TBookingPage> {
         <div className={styles['checkoutContainer']}>
           <h3 className={styles['checkoutContainer-title']}>Чекаут</h3>
           <p style={{ marginBottom: 10 }} className={styles['checkoutContainer-subtitle']}>
+            <b>Студия:</b> {area.title}
+          </p>
+          <p style={{ marginBottom: 10 }} className={styles['checkoutContainer-subtitle']}>
             <b>Дата:</b> {date.format('DD MMMM YYYY')}
           </p>
           <p style={{ marginBottom: 10 }} className={styles['checkoutContainer-subtitle']}>
@@ -761,17 +772,22 @@ class BookingPage extends React.Component<TBookingPage> {
               <span className={styles['bonus-title']}>Оплатить бонусами</span>
               <div className={styles['bonus-inputs']}>
                 <input onChange={this.setBonus} type="range" min="0" max={max} value={this.state.bonus}></input>
-                <input onChange={this.setBonus} type="number" min="0" max={max} value={this.state.bonus}></input>
+                <input onChange={this.setBonus} type="number" min="0" max={max} value={this.state.bonus} readOnly></input>
               </div>
             </div>
           )}
+          <div style={{ marginTop: '10px'}}>
+            <input onChange={this.setAgreement} checked={this.state.agreement} type="checkbox" id="agreement" name="agreement" />
+            <label style={{fontSize: '12px', marginLeft: '2px'}} htmlFor="agreement">Я соглашаюсь с <a href="http://admin.fotoflash.studio/media/docs/%D0%9F%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0_%D0%90%D1%80%D1%82-%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%82%D0%B2%D0%B0__Fotoflas_hWrBUTn.pdf" target="_blank">правилами пользования</a> фотостудией</label>
+          </div>
+
           <Button
             style={{ marginTop: 10 }}
             type="primary"
             size="md"
             text="Забронировать"
             onClick={() => this.createBooking(price)}
-            isDisabled={!localStorage.getItem('token') || this.state.running}
+            isDisabled={!localStorage.getItem('token') || !this.state.agreement || this.state.running}
           />
         </div>
       );
