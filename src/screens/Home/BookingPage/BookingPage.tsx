@@ -225,7 +225,7 @@ class BookingPage extends React.Component<TBookingPage> {
         const { data } = await axios.post('http://admin.fotoflash.studio/api/booking/', bookingData, {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('token'),
+            Authorization: localStorage.getItem('token') as any,
           },
         });
 
@@ -285,7 +285,7 @@ class BookingPage extends React.Component<TBookingPage> {
           {
             headers: {
               'Content-Type': 'application/json',
-              Authorization: localStorage.getItem('token'),
+              Authorization: localStorage.getItem('token') as any,
             },
           }
         );

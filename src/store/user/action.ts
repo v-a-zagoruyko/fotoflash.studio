@@ -122,14 +122,14 @@ export const fetchUser: ActionCreator<ThunkAction<
     const { data }: { data: any } = await axios.get('http://admin.fotoflash.studio/api/auth/user/', {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
+        Authorization: localStorage.getItem('token') as any,
       },
     });
 
     const user = await axios.get(`http://admin.fotoflash.studio/api/users/${data.pk}/`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
+        Authorization: localStorage.getItem('token') as any,
       },
     });
 
@@ -168,14 +168,14 @@ export const patchUser: ActionCreator<ThunkAction<
     const { data }: { data: any } = await axios.get('http://admin.fotoflash.studio/api/auth/user/', {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
+        Authorization: localStorage.getItem('token') as any,
       },
     });
 
     const newUser = await axios.patch(`http://admin.fotoflash.studio/api/users/${data.pk}/`, user, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
+        Authorization: localStorage.getItem('token') as any,
       },
     });
 
@@ -212,7 +212,7 @@ export const fetchUserBookingList: ActionCreator<ThunkAction<
     const { data }: { data: IBooking[] } = await axios.get('http://admin.fotoflash.studio/api/booking/', {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
+        Authorization: localStorage.getItem('token') as any,
       },
     });
 
@@ -249,7 +249,7 @@ export const createUserBooking: ActionCreator<ThunkAction<
     await axios.post('http://admin.fotoflash.studio/api/booking/', booking, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
+        Authorization: localStorage.getItem('token') as any,
       },
     });
 
