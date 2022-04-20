@@ -222,7 +222,7 @@ class BookingPage extends React.Component<TBookingPage> {
 
     if (localStorage.getItem('token') && profile) {
       try {
-        const { data } = await axios.post('http://admin.fotoflash.studio/api/booking/', bookingData, {
+        const { data } = await axios.post('http://194.67.121.29/api/booking/', bookingData, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: localStorage.getItem('token') as any,
@@ -252,7 +252,7 @@ class BookingPage extends React.Component<TBookingPage> {
         data: {
           Token: token,
           TerminalKey: term,
-          NotificationURL: 'http://admin.fotoflash.studio/api/locationrentstatus/',
+          NotificationURL: 'http://194.67.121.29/api/locationrentstatus/',
           OrderId: String(orderId),
           Description: `Аренда фотостудии - ${areaTitle?.title} на ${date.format('DD-MMMM-YYYY')}`,
           Amount: (price - bonus_) * 100,
@@ -277,7 +277,7 @@ class BookingPage extends React.Component<TBookingPage> {
 
       try {
         await axios.post(
-          'http://admin.fotoflash.studio/api/paymenturl/',
+          'http://194.67.121.29/api/paymenturl/',
           {
             OrderId: orderId,
             PaymentUrl: data.PaymentURL,
@@ -778,7 +778,7 @@ class BookingPage extends React.Component<TBookingPage> {
           )}
           <div style={{ marginTop: '10px'}}>
             <input onChange={this.setAgreement} checked={this.state.agreement} type="checkbox" id="agreement" name="agreement" />
-            <label style={{fontSize: '12px', marginLeft: '2px'}} htmlFor="agreement">Я соглашаюсь с <a href="http://admin.fotoflash.studio/media/docs/%D0%9F%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0_%D0%90%D1%80%D1%82-%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%82%D0%B2%D0%B0__Fotoflas_hWrBUTn.pdf" target="_blank">правилами пользования</a> фотостудией</label>
+            <label style={{fontSize: '12px', marginLeft: '2px'}} htmlFor="agreement">Я соглашаюсь с <a href="http://194.67.121.29/media/docs/%D0%9F%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0_%D0%90%D1%80%D1%82-%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%82%D0%B2%D0%B0__Fotoflas_hWrBUTn.pdf" target="_blank">правилами пользования</a> фотостудией</label>
           </div>
 
           <Button

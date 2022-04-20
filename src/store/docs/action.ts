@@ -16,7 +16,7 @@ export const fetchDocsList: ActionCreator<ThunkAction<
   dispatch(docsRequest);
 
   try {
-    const { data }: { data: IDocs[] } = await axios.get('http://admin.fotoflash.studio/api/docs/');
+    const { data }: { data: IDocs[] } = await axios.get('http://194.67.121.29/api/docs/');
     const docsSuccess: IDocsListSuccessAction = {
       list: data,
       type: 'DOCS_LIST_SUCCESS',

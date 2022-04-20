@@ -27,7 +27,7 @@ export const fetchStockList: ActionCreator<ThunkAction<
   dispatch(stockRequest);
 
   try {
-    const { data }: { data: IStock[] } = await axios.get('http://admin.fotoflash.studio/api/stock/');
+    const { data }: { data: IStock[] } = await axios.get('http://194.67.121.29/api/stock/');
 
     const stockSuccess: IStockListSuccessAction = {
       list: data,
@@ -57,7 +57,7 @@ export const fetchRentList: ActionCreator<ThunkAction<
   dispatch(rentRequest);
 
   try {
-    const { data }: { data: IStock[] } = await axios.get('http://admin.fotoflash.studio/api/rent/');
+    const { data }: { data: IStock[] } = await axios.get('http://194.67.121.29/api/rent/');
 
     const rentSuccess: IRentListSuccessAction = {
       list: data,
@@ -87,7 +87,7 @@ export const fetchServicesList: ActionCreator<ThunkAction<
   dispatch(servicesRequest);
 
   try {
-    const { data }: { data: IStock[] } = await axios.get('http://admin.fotoflash.studio/api/services/');
+    const { data }: { data: IStock[] } = await axios.get('http://194.67.121.29/api/services/');
 
     const servicesSuccess: IServicesListSuccessAction = {
       list: data,

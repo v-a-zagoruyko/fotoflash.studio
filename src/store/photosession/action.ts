@@ -21,7 +21,7 @@ export const fetchPhotosessionList: ActionCreator<ThunkAction<
   dispatch(photosessionRequest);
 
   try {
-    const { data }: { data: IPhotosession[] } = await axios.get('http://admin.fotoflash.studio/api/photosession/');
+    const { data }: { data: IPhotosession[] } = await axios.get('http://194.67.121.29/api/photosession/');
     const photosessionSucess: IPhotosessionListSuccessAction = {
       list: data,
       type: 'PHOTOSESSION_LIST_SUCCESS',

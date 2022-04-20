@@ -41,7 +41,7 @@ class RestorePage extends React.Component<IUserPageProps, IUserPageState> {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         data: { email },
-        url: `http://admin.fotoflash.studio/user/password/reset/`,
+        url: `http://194.67.121.29/user/password/reset/`,
       });
 
       toast.success(`Письмо с инструкцией отправлено на ${email}`);
@@ -58,7 +58,7 @@ class RestorePage extends React.Component<IUserPageProps, IUserPageState> {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         data: { uid, token, new_password1, new_password2 },
-        url: `http://admin.fotoflash.studio/user/password/reset/confirm/`,
+        url: `http://194.67.121.29/user/password/reset/confirm/`,
       });
 
       history.push('/user');

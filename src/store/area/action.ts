@@ -16,7 +16,7 @@ export const fetchAreaList: ActionCreator<ThunkAction<
   dispatch(areaRequest);
 
   try {
-    const { data }: { data: IArea[] } = await axios.get('http://admin.fotoflash.studio/api/area/');
+    const { data }: { data: IArea[] } = await axios.get('http://194.67.121.29/api/area/');
     const areaSucess: IAreaListSuccessAction = {
       list: data,
       type: 'AREA_LIST_SUCCESS',

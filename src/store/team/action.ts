@@ -16,7 +16,7 @@ export const fetchTeamList: ActionCreator<ThunkAction<
   dispatch(teamRequest);
 
   try {
-    const { data }: { data: ITeam[] } = await axios.get('http://admin.fotoflash.studio/api/staff/');
+    const { data }: { data: ITeam[] } = await axios.get('http://194.67.121.29/api/staff/');
 
     const teamSuccess: ITeamListSuccessAction = {
       list: data,

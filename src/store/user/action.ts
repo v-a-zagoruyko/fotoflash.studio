@@ -42,7 +42,7 @@ export const loginUser: ActionCreator<ThunkAction<
   dispatch(userRequest);
 
   try {
-    const { data }: { data: ILogin } = await axios.post('http://admin.fotoflash.studio/api/auth/login/', credentials, {
+    const { data }: { data: ILogin } = await axios.post('http://194.67.121.29/api/auth/login/', credentials, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -81,7 +81,7 @@ export const createUser: ActionCreator<ThunkAction<
   dispatch(userRequest);
 
   try {
-    await axios.post('http://admin.fotoflash.studio/api/users/', info, {
+    await axios.post('http://194.67.121.29/api/users/', info, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -119,14 +119,14 @@ export const fetchUser: ActionCreator<ThunkAction<
   dispatch(userRequest);
 
   try {
-    const { data }: { data: any } = await axios.get('http://admin.fotoflash.studio/api/auth/user/', {
+    const { data }: { data: any } = await axios.get('http://194.67.121.29/api/auth/user/', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('token') as any,
       },
     });
 
-    const user = await axios.get(`http://admin.fotoflash.studio/api/users/${data.pk}/`, {
+    const user = await axios.get(`http://194.67.121.29/api/users/${data.pk}/`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('token') as any,
@@ -165,14 +165,14 @@ export const patchUser: ActionCreator<ThunkAction<
   dispatch(userRequest);
 
   try {
-    const { data }: { data: any } = await axios.get('http://admin.fotoflash.studio/api/auth/user/', {
+    const { data }: { data: any } = await axios.get('http://194.67.121.29/api/auth/user/', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('token') as any,
       },
     });
 
-    const newUser = await axios.patch(`http://admin.fotoflash.studio/api/users/${data.pk}/`, user, {
+    const newUser = await axios.patch(`http://194.67.121.29/api/users/${data.pk}/`, user, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('token') as any,
@@ -209,7 +209,7 @@ export const fetchUserBookingList: ActionCreator<ThunkAction<
   dispatch(userRequest);
 
   try {
-    const { data }: { data: IBooking[] } = await axios.get('http://admin.fotoflash.studio/api/booking/', {
+    const { data }: { data: IBooking[] } = await axios.get('http://194.67.121.29/api/booking/', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('token') as any,
@@ -246,7 +246,7 @@ export const createUserBooking: ActionCreator<ThunkAction<
   dispatch(userRequest);
 
   try {
-    await axios.post('http://admin.fotoflash.studio/api/booking/', booking, {
+    await axios.post('http://194.67.121.29/api/booking/', booking, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('token') as any,
@@ -285,7 +285,7 @@ export const fetchUserBookingTime: ActionCreator<ThunkAction<
 
   try {
     const { data }: { data: IBooking[] } = await axios.get(
-      `http://admin.fotoflash.studio/api/locationrent/?id=${area}&date=${date}`,
+      `http://194.67.121.29/api/locationrent/?id=${area}&date=${date}`,
       {
         headers: {
           'Content-Type': 'application/json',

@@ -16,7 +16,7 @@ export const fetchNewsList: ActionCreator<ThunkAction<
   dispatch(newsRequest);
 
   try {
-    const { data }: { data: INews[] } = await axios.get('http://admin.fotoflash.studio/api/news/');
+    const { data }: { data: INews[] } = await axios.get('http://194.67.121.29/api/news/');
     const newsSucess: INewsListSuccessAction = {
       list: data,
       type: 'NEWS_LIST_SUCCESS',
